@@ -20,10 +20,17 @@ export default class Search extends React.Component {
     handleClick = () => {
         this.manualFocusInst.focus();
     }
+    handelCancel = () => {
+        this.props.history.goBack()
+    }
 
     render() {
         return <div className="search_root">
-            <SearchBar placeholder="自动获取光标" ref={ref => this.autoFocusInst = ref} />
+            <SearchBar
+                placeholder="Search"
+                ref={ref => this.autoFocusInst = ref}
+                onCancel={this.handelCancel}
+            />
             <WhiteSpace />
         </div>;
     }

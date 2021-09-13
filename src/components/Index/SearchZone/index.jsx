@@ -18,9 +18,11 @@ export default class SearchZone extends React.Component {
 
     handleClick = () => {
         this.props.history.push('/index/search')
-        PubSub.publish('changeTab', '/index/search')
+        // PubSub.publish('changeTab', '/index/search')
         // console.log(this.props.history.location.pathname)
     }
+
+
 
     render() {
         return (<div>
