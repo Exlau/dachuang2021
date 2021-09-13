@@ -1,23 +1,17 @@
 import logo from './logo.svg';
+import { Route, Redirect } from 'react-router-dom'
+import 'antd-mobile/dist/antd-mobile.css'
 import './App.css';
+import Index from './components/Index';
+import Login from './components/Login';
 
-function App() {
+
+function App(props) {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Route path='/' render={() => <Redirect to='/index/home' />} />
+      <Route path='/login' component={Login} history={props.history} />
+      <Route path='/index' component={Index} history={props.history}></Route>
     </div>
   );
 }
