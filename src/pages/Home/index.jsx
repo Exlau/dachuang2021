@@ -8,10 +8,11 @@ export default function Home(props) {
                 <SearchZone history={props.history}></SearchZone>
             </div>
             <div className="center_info">
-                <InfoCard></InfoCard>
-                <InfoCard></InfoCard>
-                <InfoCard></InfoCard>
-                <InfoCard></InfoCard>
+                <InfoCard history={props.history} params='dddd'></InfoCard>
+                <InfoCard history={props.history}></InfoCard>
+                <InfoCard history={props.history}></InfoCard>
+                <InfoCard history={props.history}></InfoCard>
+                <InfoCard history={props.history}></InfoCard>
             </div>
         </div>
     )

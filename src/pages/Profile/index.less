@@ -10,17 +10,56 @@
 
     .self_info {
         .avatar {
-            width: 80px;
-            height: 80px;
+            display: inline-block;
+            margin-left: 20px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             border: 2px solid #fff;
             background-color: yellow;
             transform: translateY(-50%);
-            display: inline-block;
         }
 
-        .username {
-            font-weight: 600;
+
+        .edit_btn {
+            display: flex;
+            align-items: center;
+            float: right;
+            padding: 0 24px;
+            height: 30px;
+            font-size: 14px;
+            margin: 10px;
+            border-radius: 25px;
+            background-color: #0066FF;
+        }
+
+        .social_info {
+            transform: translateY(-45%);
+            margin-left: 20px;
+
+            .username {
+                font-size: 20px;
+            }
+
+            .follow_info {
+                display: flex;
+                transform: translateY(-30%);
+
+                h2 {
+                    font-size: 10px;
+                    color: #333;
+                    font-weight: 400;
+                    margin-right: 20px;
+                }
+
+                .follow_num {
+                    font-size: 2em;
+                    color: #0066FF;
+                    margin-right: 5px;
+                }
+            }
+
+
         }
     }
 }
