@@ -2,7 +2,7 @@ import { React, useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import { setUser } from '../../../redux/actions/user_action';
 
-import { DatePicker, List } from 'antd-mobile';
+import { DatePicker, List, InputItem } from 'antd-mobile';
 import { ImagePicker, WingBlank, SegmentedControl } from 'antd-mobile';
 
 import BackBar from '../../../components/BackBar'
@@ -13,6 +13,7 @@ import { upLoadAvatar } from '../../../apis/file';
 import { base64ToBlob } from '../../../utils/filetype';
 
 import './index.less'
+import axios from 'axios';
 const BirthDayPicker = props => {
     const nowTimeStamp = Date.now();
     const now = new Date(nowTimeStamp);
@@ -70,6 +71,9 @@ const AvatarPicker = props => {
         e.preventDefault()
         const reader = new FileReader()
         const file = e.target.files[0]
+
+        reader.readAsDataURL(file)
+
         reader.onload = () => {
             console.log('选择的文件', file)
             console.log('文件读取结果', reader.result)
@@ -77,20 +81,31 @@ const AvatarPicker = props => {
                 file,
                 preview: reader.result
             })
-            let formdt = new FormData()
-            formdt.append('file', file)
-            console.log('form data ', formdt)
-            upLoadAvatar(props.userInfo.userID, formdt)
-                .then(res => {
-                    console.log('res', res)
-                })
-                .catch(err => {
-                    console.log('err', err)
-                })
-        }
 
-        const readRes = reader.readAsBinaryString(file)
-        console.log('read as bin', readRes)
+            let formdt = new FormData()
+
+            formdt.append('data', file)
+
+            console.log('form data ', formdt.get('data'))
+
+            console.log('data', file)
+            // upLoadAvatar(props.userInfo.userID, file)
+            //     .then(res => {
+            //         console.log('res', res)
+            //     })
+            //     .catch(err => {
+            //         console.log('err', err)
+            //     })
+            axios({
+                method: 'POST',
+                url: 'http://139.186.170.86:8808/api/v1.0/file/upload/1/0',
+                headers: {
+                    'Token-Authorization-With': 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjAiLCJleHAiOjE2MzI4OTA4NDEsImlhdCI6MTYzMjgwNDQ0MSwidXNlcm5hbWUiOiJhZG1pbiJ9.hcvNTash0aRWXdNHS2TD-JmVVgckFurCKgNuvhW7nnc',
+                    'Content-Type': false
+                },
+                data: formdt
+            })
+        }
 
         const img = e.target.files
         // upLoadAvatar(props.userInfo.userID, img)
@@ -103,14 +118,16 @@ const AvatarPicker = props => {
     }
 
     return (
-
-        <input
-            className='avatarPicker'
-            id='avatar'
-            type='file'
-            onChange={onChange}
-            encType='multipart/form-data'
-        />
+        <>
+            <input
+                className='avatarPicker'
+                id='avatar'
+                type='file'
+                onChange={onChange}
+                encType='multipart/form-data'
+            />
+            <InputItem type="text" />
+        </>
     )
 }
 
@@ -148,7 +165,7 @@ const AvatarPicker = props => {
 
 //     }
 
-//     const { files } = state;
+//     const {files} = state;
 
 //     return (
 //         <ImagePicker

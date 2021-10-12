@@ -16,14 +16,14 @@ let req = axios.create({
     method: 'POST',
     headers: {
         'Token-Authorization-With': store.getState().userInfo.TOKEN,
+        'Content-Type': 'multipart/form-data'
     }
 })
 
-export const upLoadAvatar = (userID, file) => {
+export const upLoadAvatar = (userID, formData) => {
+    console.log('form data from upload', formData)
     return req({
         url: path + FILE_TYPE.AVATAR + '/' + userID,
-        data: {
-            file
-        }
+        data: formData
     })
 }
