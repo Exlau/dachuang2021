@@ -2,12 +2,12 @@ import { React, useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import { setUser } from '../../../redux/actions/user_action';
 
-import { DatePicker, List, InputItem, Picker } from 'antd-mobile';
+import { DatePicker, List, InputItem, Picker, Button } from 'antd-mobile';
 import { ImagePicker, WingBlank, SegmentedControl } from 'antd-mobile';
 
 import BackBar from '../../../components/BackBar'
 
-import { getUserInfo } from '../../../apis/userInfo';
+import { getUserInfo, updateUserInfo } from '../../../apis/userInfo';
 import { upLoadAvatar } from '../../../apis/file';
 
 import { base64ToBlob } from '../../../utils/filetype';
@@ -54,7 +54,7 @@ const BirthDayPicker = props => {
                 value={state.date}
                 onChange={handleChange}
             >
-                <List.Item arrow="horizontal">Date</List.Item>
+                <List.Item arrow="horizontal">生日</List.Item>
             </DatePicker>
         </div>
     )
@@ -62,8 +62,8 @@ const BirthDayPicker = props => {
 
 const CollegePicker = props => {
 
-    const [collegeNow, setCollege] = useState('')
-    setCollege()
+    const [collegeNow, setCollege] = useState(props.collegeNow)
+    // setCollege()
     const collegeList = [
         "计算机科学与工程学院", "自动化工程学院", "机械与电气工程学院", "生命科学与技术学院", "数学科学学院", "经济与管理学院",
         "公共管理学院", "外国语学院", "马克思主义学院", "资源与环境学院", "航空航天学院", "医学院", "信息与软件工程学院",
@@ -82,12 +82,84 @@ const CollegePicker = props => {
             title='college'
             cols={1}
             style={{ width: "100%" }}
+            onChange={data => {
+                props.sndData(data)
+                setCollege(data)
+            }}
         >
             <List.Item
                 arrow='horizontal'
             >
-                学院
+                {collegeNow ? collegeNow : '学院'}
             </List.Item>
+        </Picker>
+    )
+}
+
+
+const CompetitionPicker = props => {
+    const [competitionNow, setCompetition] = useState(props.competitionNow)
+    // setCollege()
+    const competitionList = [
+        "挑战杯", "数学建模(美赛，国赛)", "CTF", "ACM", "蓝桥杯", "互联网+大学创新创业大赛",
+        "大学生机械创新设计竞赛", "大学生化学实验邀请赛", "大学生结构设计竞赛", "大学生电子商务创新创意创业挑战赛", "大学生英语竞赛"
+    ]
+
+    const competitionPickerList = competitionList.map(value => {
+        return { value, label: value }
+    })
+
+
+
+    return (
+        <Picker
+            data={competitionPickerList}
+            title='competition'
+            cols={1}
+            style={{ width: "100%" }}
+            onChange={data => {
+                props.sndData(data)
+                setCompetition(data)
+            }}
+        >
+            <List.Item
+                arrow='horizontal'
+            >
+                {competitionNow ? competitionNow : '竞赛'}
+            </List.Item>
+        </Picker>
+    )
+}
+
+const GradePicker = props => {
+    const [gradeNow, setGrade] = useState(props.gradeNow)
+
+    const gradeList = [
+        "大一", "大二", "大三", "大四", "研一", "研二", "研三"
+    ]
+
+    const gradePickerList = gradeList.map(value => {
+        return { value, label: value }
+    })
+
+
+    return (
+        <Picker
+            data={gradePickerList}
+            title='grade'
+            cols={1}
+            style={{ width: "100%" }}
+            onChange={data => {
+                props.sndData(data)
+                setGrade(data)
+            }}
+        >
+            <List.Item
+                arrow='horizontal'
+            >
+                {gradeNow ? gradeNow : '年级'}
+            </List.Item>
+
         </Picker>
     )
 }
@@ -163,50 +235,6 @@ const AvatarPicker = props => {
 }
 
 
-// const AvatarPicker = props => {
-//     const data = [{
-//         url: 'https://zos.alipayobjects.com/rmsportal/PZUUCKTRIHWiZSY.jpeg',
-//         id: '2121',
-//     }];
-
-//     const [state, setState] = useState({
-//         files: data,
-//         multiple: false,
-//     })
-
-//     const onChange = (files, type, index) => {
-//         console.log(files, type, index);
-//         console.log(files.length)
-//         setState({
-//             files,
-//         });
-//         if (files.length != 0) {
-//             console.log('userID', props.userInfo.userID)
-//             console.log('filedata', files[0].url)
-//             let realFile = base64ToBlob(files[0].url, 'image/png')
-//             console.log('realpng', realFile)
-//             upLoadAvatar(props.userInfo.userID, realFile)
-//                 .then(res => {
-//                     console.log('res', res)
-//                 })
-//                 .catch(err => {
-//                     console.log('err', err)
-//                 })
-//         }
-
-//     }
-
-//     const {files} = state;
-
-//     return (
-//         <ImagePicker
-//             files={files}
-//             onChange={onChange}
-//             onImageClick={(index, fs) => console.log(index, fs)}
-//             selectable={files.length < 1}
-//         />
-//     )
-// }
 
 
 
@@ -216,25 +244,30 @@ const Edit = props => {
         college: "信息与软件工程学院",
         competition: "ACM",
         country: "中国",
-        // description: "我喜欢睡觉 ",
+        description: "我喜欢睡觉",
         district: "成都市",
-        email: "7553519521@qq.com",
+        email: "",
         grade: "大一",
-        id: 1,
-        nickname: "newName",
-        // password: "x654321",
-        phone: 13956421548,
+        id: [],
+        nickname: "",
+        password: "x654321",
+        phone: [],
         province: "四川",
-        qq: 7553519521,
+        qq: 12321321,
         sex: "男",
-        wechat: "wechat-3566"
+        wechat: ""
     })
+
 
     useEffect(() => {
         getUserInfo(props.userInfo.userID)
             .then(res => {
-                console.log(res)
-                setUserInfo(res.data)
+                const existData = Object.keys(res.data)
+                    .filter(key => res.data[key] !== null && res.data[key] !== undefined)
+                    .reduce((acc, key) => ({ ...acc, [key]: res.data[key] }), {})
+
+                setUserInfo({ ...userInfo, ...existData })
+                console.log('setUserinfo', userInfo)
             })
             .catch(err => {
                 console.log(err)
@@ -243,9 +276,53 @@ const Edit = props => {
 
 
     const handleBirthday = data => {
-        console.log('parent', data)
+        setUserInfo({ ...userInfo, birthday: data })
     }
 
+    const handleCollege = data => {
+        setUserInfo({ ...userInfo, college: data[0] })
+
+    }
+
+    const handleCompetition = data => {
+        setUserInfo({ ...userInfo, competition: data[0] })
+
+    }
+
+    // const handleName = data => {
+    //     setUserInfo({ ...userInfo, name: data })
+
+    // }
+
+    const handleEmail = data => {
+        setUserInfo({ ...userInfo, email: data })
+
+    }
+
+    const handleGrade = data => {
+        setUserInfo({ ...userInfo, grade: data[0] })
+
+    }
+
+    const handleNickname = data => {
+        setUserInfo({ ...userInfo, nickname: data })
+    }
+
+    const handlePhone = data => {
+        setUserInfo({ ...userInfo, phone: data })
+        console.log(userInfo)
+    }
+
+    const handleSubmit = e => {
+        console.log('上传的数据', userInfo)
+        updateUserInfo(userInfo)
+            .then(res => {
+                console.log('success', res)
+            })
+            .catch(err => {
+                console.log('error', err)
+            })
+    }
     return (
         <div className='edit_root'>
             <BackBar history={props.history} title='edit' />
@@ -262,8 +339,20 @@ const Edit = props => {
 
             <h2 className='edit_title'>基本资料</h2>
             <BirthDayPicker sndData={handleBirthday} />
-            <CollegePicker />
-            <InputItem placeholder='name'>姓名</InputItem>
+            <CollegePicker sndData={handleCollege} collegeNow={userInfo.college} />
+            <CompetitionPicker sndData={handleCompetition} competitionNow={userInfo.competition} />
+            <GradePicker sndData={handleGrade} gradeNow={userInfo.grade} />
+            {/* <InputItem onChange={handleName} placeholder={userInfo.name}>姓名</InputItem> */}
+            <InputItem onChange={handleEmail} placeholder={userInfo.email}>email</InputItem>
+            <InputItem onChange={handleNickname} placeholder={userInfo.nickname}>Nickname</InputItem>
+            <InputItem onChange={handlePhone} placeholder={userInfo.phone}>电话</InputItem>
+            <Button
+                type='primary'
+                className='submit_btn'
+                onClick={handleSubmit}
+            >
+                submit
+            </Button>
 
         </div >
     )
