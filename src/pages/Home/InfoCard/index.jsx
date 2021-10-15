@@ -1,6 +1,7 @@
 import { React, useEffect } from 'react'
 import { Card, WhiteSpace } from 'antd-mobile';
 
+// title partialContent competition nickname
 export default function InfoCard(props) {
 
     const handleClick = () => {
@@ -14,14 +15,14 @@ export default function InfoCard(props) {
                 <Card.Header
                     title={props.title}
                     thumb="https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg"
-                    extra={<span>this is extra</span>}
+                    extra={<span>{props.nickname}</span>}
                 />
                 <Card.Body>
-                    <div>This is content of `Card`</div>
+                    <div dangerouslySetInnerHTML={{ __html: props.partialContent }}></div>
                 </Card.Body>
-                <Card.Footer content="footer content" extra={<div>extra footer content</div>} />
+                <Card.Footer content={props.competition} extra={<div>extra footer content</div>} />
             </Card>
-        </div>
+        </div >
     )
 }
 

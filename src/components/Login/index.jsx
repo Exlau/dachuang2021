@@ -5,7 +5,7 @@ import { setToken, setUser } from '../../redux/actions/user_action'
 
 import { List, InputItem, Toast, Button } from 'antd-mobile';
 
-import { login } from '../../apis/login';
+import { login, regis } from '../../apis/login';
 import axios from 'axios';
 
 const Login = (props) => {
@@ -51,9 +51,31 @@ const Login = (props) => {
                 })
                 Toast.info(res.headers.message)
             }).catch(err => {
+                console.log(userInfo)
                 Toast.info(err.headers.message)
             })
 
+    }
+
+    const doRegis = e => {
+        const regsInfo = {
+            nickname: userInfo.username,
+            ...userInfo
+        }
+        regis(regsInfo)
+            .then(res => {
+                const TOKEN = res.headers['token-authorization-with']
+                const userID = res.headers['user-id']
+                props.setUser({
+                    TOKEN,
+                    userID
+                })
+                Toast.info(res.headers.message)
+            })
+            .catch(err => {
+                console.log(userInfo)
+                Toast.info(err.headers.message)
+            })
     }
 
     return (
@@ -84,6 +106,14 @@ const Login = (props) => {
                 size='small'
             >
                 login
+            </Button>
+            <Button
+                type='primary'
+                onClick={doRegis}
+                inline
+                size='small'
+            >
+                registry
             </Button>
         </div>
     )
