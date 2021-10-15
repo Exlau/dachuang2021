@@ -10,18 +10,6 @@ import './index.less'
 
 const Profile = (props) => {
     const [profileInfo, setProfileInfo] = useState({})
-    useEffect(() => {
-
-        // 这里最好做个缓存
-        getUserInfo(props.userInfo.userID)
-            .then(res => {
-                console.log(res)
-                setProfileInfo(res.data)
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }, [])
 
     const showFollowMe = e => {
         props.history.push('/followlist')
@@ -35,6 +23,18 @@ const Profile = (props) => {
     const editClick = e => {
         props.history.push('/editprofile')
     }
+
+    useEffect(() => {
+        // 这里最好做个缓存
+        getUserInfo(props.userInfo.userID)
+            .then(res => {
+                console.log(res)
+                setProfileInfo(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }, [])
 
     return (
         <div className='profile_root'>

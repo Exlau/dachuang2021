@@ -2,6 +2,7 @@ import { lazy } from "react";
 import Home from "../pages/Home";
 import Search from "../pages/Search";
 import Profile from "../pages/Profile";
+import Post from "../pages/Post";
 
 const routes = [
     {
@@ -31,6 +32,12 @@ const routes = [
         // component: lazy(() => { import('../pages/Profile') })
         component: Profile
     },
+    {
+        selectedTab: '/index/post',
+        title:'POST',
+        key:'POST',
+        component: Post
+    }
 
 ]
 

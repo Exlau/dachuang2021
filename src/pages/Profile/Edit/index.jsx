@@ -2,7 +2,7 @@ import { React, useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import { setUser } from '../../../redux/actions/user_action';
 
-import { DatePicker, List, InputItem, Picker, Button } from 'antd-mobile';
+import { DatePicker, List, InputItem, Picker, Button, Toast } from 'antd-mobile';
 import { ImagePicker, WingBlank, SegmentedControl } from 'antd-mobile';
 
 import BackBar from '../../../components/BackBar'
@@ -67,12 +67,13 @@ const CollegePicker = props => {
     const collegeList = [
         "计算机科学与工程学院", "自动化工程学院", "机械与电气工程学院", "生命科学与技术学院", "数学科学学院", "经济与管理学院",
         "公共管理学院", "外国语学院", "马克思主义学院", "资源与环境学院", "航空航天学院", "医学院", "信息与软件工程学院",
-        "基础与前沿研究院", "材料与能源学院", "格拉斯哥学院", "英才实验学院", "先进毫米波技术集成攻关研究院", "电子科技大学（深圳）高等研究院"
+        "基础与前沿研究院", "材料与能源学院", "格拉斯哥学院", "英才实验学院", "先进毫米波技术集成攻关研究院", "电子科技大学(深圳)高等研究院"
     ]
 
-    const collegePickerList = collegeList.map(value => {
-        return { value, label: value }
-    })
+    const collegePickerList =
+        collegeList.map(value => {
+            return { value, label: value }
+        })
 
 
 
@@ -244,7 +245,6 @@ const Edit = props => {
         college: "信息与软件工程学院",
         competition: "ACM",
         country: "中国",
-        description: "我喜欢睡觉",
         district: "成都市",
         email: "",
         grade: "大一",
@@ -321,6 +321,7 @@ const Edit = props => {
             })
             .catch(err => {
                 console.log('error', err)
+                    Toast.info(err.headers.message)
             })
     }
     return (

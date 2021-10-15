@@ -10,6 +10,7 @@ import Login from '../Login'
 import Detail from '../Detail'
 import Edit from '../../pages/Profile/Edit'
 import FollowList from '../../pages/Profile/FollowList';
+import Post from '../../pages/Post';
 
 const Routers = (props) => {
 
@@ -20,6 +21,7 @@ const Routers = (props) => {
                 <Route path='/login' component={Login} history={props.history} />
                 <Route path='/index' component={Index} history={props.history} />
                 <Route path='/detail' component={Detail} history={props.history} />
+                <Route path='/Post' component={Post} history={props.history} />
                 <Route path='/editprofile' component={Edit} history={props.history} />
                 <Route path='/followList' component={FollowList} history={props.history} />
             </div>
