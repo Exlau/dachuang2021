@@ -17,3 +17,11 @@ export const getPosts = (postNum, sortByHit) => {
         url: path,
     })
 }
+
+export const getAPost = (postID) => {
+    const path = `/post/getByPostId/${postID}`
+    return req({
+        method: 'GET',
+        url: path
+    })
+}

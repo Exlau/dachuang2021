@@ -5,7 +5,7 @@ import { Card, WhiteSpace } from 'antd-mobile';
 export default function InfoCard(props) {
 
     const handleClick = () => {
-        props.history.push(`/detail/${props.params}`,)
+        props.history.push(`/detail/${props.id}`,)
     }
 
     return (

@@ -11,7 +11,6 @@ export default function Home(props) {
         getPosts(10, false)
             .then(res => {
                 sethomePosts(res.data.list)
-                console.log(res.data.list)
             })
             .catch(err => {
                 Toast.info(err.data.error)
